@@ -8,7 +8,6 @@
   align-items: center;
   justify-content: space-between;
   width: 90%;
-  max-width: 1110px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -56,6 +55,7 @@
   background-color: transparent;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .navbar-pc {
@@ -78,7 +78,7 @@
     width: 120px;
   }
   .nav-menu-list {
-    padding-right: 40px;
+    justify-content: center;
   }
   .nav-link {
     color: white;
