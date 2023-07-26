@@ -8,7 +8,6 @@ import './index.css'
 
 const Header = props => {
   const onClickLogout = () => {
-    console.log('hi')
     const {history} = props
     Cookies.remove('jwt_token')
     history.replace('/login')

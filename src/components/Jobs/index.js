@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 
 import Header from '../Header'
 import ProfileSection from '../ProfileSection'
+import JobItem from '../JobItem'
 import './index.css'
 
 const employmentTypesList = [
@@ -61,6 +62,43 @@ class Jobs extends Component {
     searchInput: '',
   }
 
+  componentDidMount() {
+    this.getJobsList()
+  }
+
+  getJobsList = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
+    const {selectedEmployment, selectedSalary, searchInput} = this.state
+    const jwtToken = Cookies.get('jwt_token')
+    const url = `https://apis.ccbp.in/jobs?employment_type=${selectedEmployment}&minimum_package=${selectedSalary}&search=${searchInput}`
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+    const response = await fetch(url, options)
+    if (response.ok) {
+      const data = await response.json()
+      const formattedData = data.jobs.map(eachJob => ({
+        companyLogoUrl: eachJob.company_logo_url,
+        employmentType: eachJob.employment_type,
+        id: eachJob.id,
+        jobDescription: eachJob.job_description,
+        location: eachJob.location,
+        packagePerAnnum: eachJob.package_per_annum,
+        rating: eachJob.rating,
+        title: eachJob.title,
+      }))
+      this.setState({
+        jobsList: formattedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
   renderSearchContainer = () => (
     <div className="search-container">
       <input type="search" className="search-input" placeholder="Search" />
@@ -100,7 +138,13 @@ class Jobs extends Component {
   renderJobs = () => {
     const {jobsList} = this.state
     return jobsList.length !== 0 ? (
-      <p>jobs</p>
+      <div>
+        <ul className="jobs-list">
+          {jobsList.map(eachJob => (
+            <JobItem jobDetails={eachJob} key={eachJob.id} />
+          ))}
+        </ul>
+      </div>
     ) : (
       <div className="no-jobs-failure-view">
         <img
@@ -143,7 +187,7 @@ class Jobs extends Component {
           </div>
           <div className="jobs-container">
             <div className="search-pc-view">{this.renderSearchContainer()}</div>
-            {this.renderJobs()}
+            {this.renderJobsList()}
           </div>
         </div>
       </>
