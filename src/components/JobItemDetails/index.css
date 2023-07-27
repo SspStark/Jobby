@@ -124,8 +124,3 @@
   padding-left: 0px;
   margin-top: 20px;
 }
-@media (min-width: 1068px) {
-  .similar-jobs-list {
-    justify-content: space-between;
-  }
-}
