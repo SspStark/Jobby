@@ -125,7 +125,8 @@ class Jobs extends Component {
   changeSalaryRange = event =>
     this.setState({selectedSalary: event.target.value}, this.getJobsList)
 
-  changeSearchInput = event => this.setState({searchInput: event.target.value})
+  changeSearchInput = event =>
+    this.setState({searchInput: event.target.value}, this.getJobsList)
 
   searchJobs = () => this.getJobsList()
 
@@ -137,12 +138,7 @@ class Jobs extends Component {
         placeholder="Search"
         onChange={this.changeSearchInput}
       />
-      <button
-        type="button"
-        className="search-button"
-        data-testid="searchButton"
-        onClick={this.searchJobs}
-      >
+      <button type="button" className="search-button" onClick={this.searchJobs}>
         <BsSearch className="search-icon" />
       </button>
     </div>

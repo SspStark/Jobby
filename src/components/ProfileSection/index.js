@@ -59,7 +59,7 @@ class ProfileSection extends Component {
   )
 
   renderLoader = () => (
-    <div className="profile-loader-container" data-testid="loader">
+    <div className="profile-loader-container">
       <Loader type="ThreeDots" color="blue" height="30" width="30" />
     </div>
   )
