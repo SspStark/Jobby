@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import Header from '../Header'
 import ProfileSection from '../ProfileSection'
 import JobItem from '../JobItem'
+import JobFiltersGroup from '../JobFiltersGroup'
 import './index.css'
 
 const employmentTypesList = [
@@ -57,7 +58,7 @@ class Jobs extends Component {
   state = {
     jobsList: [],
     apiStatus: apiStatusConstants.initial,
-    selectedEmployment: '',
+    selectedEmployments: [],
     selectedSalary: '',
     searchInput: '',
   }
@@ -68,9 +69,10 @@ class Jobs extends Component {
 
   getJobsList = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
-    const {selectedEmployment, selectedSalary, searchInput} = this.state
+    const {selectedEmployments, selectedSalary, searchInput} = this.state
+    const employments = selectedEmployments.join(',')
     const jwtToken = Cookies.get('jwt_token')
-    const url = `https://apis.ccbp.in/jobs?employment_type=${selectedEmployment}&minimum_package=${selectedSalary}&search=${searchInput}`
+    const url = `https://apis.ccbp.in/jobs?employment_type=${employments}&minimum_package=${selectedSalary}&search=${searchInput}`
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -99,18 +101,54 @@ class Jobs extends Component {
     }
   }
 
+  selectEmploymentType = event => {
+    const {selectedEmployments} = this.state
+    const {value, checked} = event.target
+    if (checked) {
+      this.setState(
+        prevState => ({
+          selectedEmployments: [...prevState.selectedEmployments, value],
+        }),
+        this.getJobsList,
+      )
+    } else {
+      const updatedEmploymentTypes = selectedEmployments.filter(
+        each => each !== value,
+      )
+      this.setState(
+        {selectedEmployments: updatedEmploymentTypes},
+        this.getJobsList,
+      )
+    }
+  }
+
+  changeSalaryRange = event =>
+    this.setState({selectedSalary: event.target.value}, this.getJobsList)
+
+  changeSearchInput = event => this.setState({searchInput: event.target.value})
+
+  searchJobs = () => this.getJobsList()
+
   renderSearchContainer = () => (
     <div className="search-container">
-      <input type="search" className="search-input" placeholder="Search" />
+      <input
+        type="search"
+        className="search-input"
+        placeholder="Search"
+        onChange={this.changeSearchInput}
+      />
       <button
         type="button"
         className="search-button"
         data-testid="searchButton"
+        onClick={this.searchJobs}
       >
         <BsSearch className="search-icon" />
       </button>
     </div>
   )
+
+  retryJobsList = () => this.getJobsList()
 
   renderFailureView = () => (
     <div className="no-jobs-failure-view">
@@ -123,7 +161,11 @@ class Jobs extends Component {
       <p className="no-jobs-failure-description">
         We cannot seem to find the page you are looking for.
       </p>
-      <button type="button" className="retry-button">
+      <button
+        type="button"
+        className="retry-button"
+        onClick={this.retryJobsList}
+      >
         Retry
       </button>
     </div>
@@ -175,6 +217,7 @@ class Jobs extends Component {
   }
 
   render() {
+    const {selectedEmployments, selectedSalary} = this.state
     return (
       <>
         <Header />
@@ -184,6 +227,14 @@ class Jobs extends Component {
               {this.renderSearchContainer()}
             </div>
             <ProfileSection />
+            <JobFiltersGroup
+              employmentTypesList={employmentTypesList}
+              salaryRangesList={salaryRangesList}
+              selectedEmployments={selectedEmployments}
+              selectedSalary={selectedSalary}
+              selectEmployment={this.selectEmploymentType}
+              changeSalaryRange={this.changeSalaryRange}
+            />
           </div>
           <div className="jobs-container">
             <div className="search-pc-view">{this.renderSearchContainer()}</div>

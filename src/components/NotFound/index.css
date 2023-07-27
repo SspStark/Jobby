@@ -1,0 +1,28 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.not-found-img {
+  width: 400px;
+}
+.not-found-heading {
+  font-size: 36px;
+  color: white;
+}
+.not-found-desc {
+  font-size: 13px;
+  color: white;
+}
+@media (max-width: 767px) {
+  .not-found-img {
+    width: 90%;
+  }
+  .not-found-heading {
+    font-size: 24px;
+  }
+}

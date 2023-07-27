@@ -1,0 +1,131 @@
+.job-item-details {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 24px;
+  color: white;
+}
+.job-details-container {
+  background-color: #272727;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 12px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .job-item-details {
+    padding: 36px;
+  }
+  .job-details-container {
+    padding: 30px 24px;
+  }
+}
+.line {
+  border: 1px solid #64748b;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.description-heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.visit-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.skills-heading {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  margin-top: 30px;
+}
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 0px;
+  margin-top: 0px;
+}
+.skill-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 40%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-right: 16px;
+}
+.skill-image {
+  width: 30px;
+  margin-right: 7px;
+}
+.skill-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+.life-at-company {
+  font-size: 13px;
+  font-weight: 500;
+}
+.life-at-company-details {
+  display: flex;
+  flex-direction: column;
+}
+.life-at-company-description {
+  font-size: 12px;
+}
+@media (min-width: 768px) {
+  .skills-heading {
+    font-size: 17px;
+  }
+  .skill-list-item {
+    width: 23%;
+  }
+  .skill-image {
+    width: 50px;
+    margin-right: 12px;
+  }
+  .skill-name {
+    font-size: 14px;
+  }
+  .life-at-company-details {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .life-at-company {
+    font-size: 17px;
+  }
+  .life-at-company-description {
+    font-size: 14px;
+    width: 60%;
+  }
+}
+.similar-jobs-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.similar-jobs-heading {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+.similar-jobs-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 0px;
+  margin-top: 20px;
+}
+@media (min-width: 1068px) {
+  .similar-jobs-list {
+    justify-content: space-between;
+  }
+}
