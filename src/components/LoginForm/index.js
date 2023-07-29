@@ -5,7 +5,12 @@ import {Redirect} from 'react-router-dom'
 import './index.css'
 
 class LoginForm extends Component {
-  state = {username: '', password: '', showError: false, errorMsg: ''}
+  state = {
+    username: 'rahul',
+    password: 'rahul@2021',
+    showError: false,
+    errorMsg: '',
+  }
 
   submitFailure = errorMsg => this.setState({showError: true, errorMsg})
 
